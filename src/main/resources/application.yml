@@ -1,0 +1,68 @@
+spring:
+  application:
+    name: payment-service
+
+  profiles:
+    active: local
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  datasource:
+    url: jdbc:h2:mem:payment
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+server:
+  port: 8081
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
+
+springdoc:
+  swagger-ui:
+    path: /payment/index.html
+  api-docs:
+    path: /payment/v1/api-docs
+
+logging:
+  level:
+    root: DEBUG
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    url: jdbc:h2:/app/data/payment
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: 0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://172.18.0.2:8761/eureka/
+
+springdoc:
+  swagger-ui:
+    path: /payment/index.html
+  api-docs:
+    path: /payment/v1/api-docs
